@@ -16,8 +16,12 @@ gitlab_runner_sentry_dsn: ''
 gitlab_runner_runners:
     # The identifier of the runner.
   - name: '{{ ansible_hostname }}'
-    # GitLab coordinator URL
-    # url: 'https://gitlab.com/ci'
+    # GitLab URL for each runner.
+    # if not set, will fallback to {{ gitlab_runner_coordinator_url }}
+    url: 'https://another-gitlab.com/ci'
+    # GitLab Token for each runner.
+    # if not set, will fallback to {{ gitlab_runner_registration_token }}
+    token: 'another-token'
     # set to 'absent' if you want to delete the runner. Defaults to 'present'.
     state: present
     # The executor used by the runner.

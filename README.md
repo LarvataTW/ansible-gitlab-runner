@@ -45,10 +45,12 @@ Example Playbook
 
 Inside `vars/main.yml`
 ```yaml
+gitlab_runner_coordinator_url: 'https://gitlab.com/ci'
 gitlab_runner_registration_token: 'HUzTMgnxk17YV8Rj8ucQ'
+
 gitlab_runner_runners:
+
   - name: 'Example Docker GitLab Runner'
-    url: 'https://gitlab.com/ci'
     executor: docker
     docker_image: 'alpine'
     tags:
@@ -64,4 +66,16 @@ gitlab_runner_runners:
         allowed_images: ["ruby:*", "python:*", "php:*"]
       runners.docker.sysctls:
         net.ipv4.ip_forward: "1"
+
+  - name: 'Another GitLab Runner in Different Server'
+    url: 'https://another-gitlab.com/ci'
+    token: 'another-token'
+    state: present
+    executor: 'shell'
+    concurrent_specific: '0'
+    run_untagged: true
+    docker_privileged: true
+    locked: 'false'
+    tags:
+      - another.gitlab.server
 ```
