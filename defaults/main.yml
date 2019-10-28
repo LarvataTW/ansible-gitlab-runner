@@ -26,6 +26,8 @@ gitlab_runner_runners:
     state: present
     # The executor used by the runner.
     executor: 'shell'
+    # Set maximum build log size in kilobytes.
+    output_limit: 4096
     # Maximum number of jobs to run concurrently on this specific runner.
     # Defaults to 0, simply means don't limit.
     concurrent_specific: '0'
@@ -84,11 +86,17 @@ gitlab_runner_runners:
     # Cache S3 insecure
     # cache_s3_insecure: false
     #
+    # Builds directory
+    # builds_dir: '/builds_dir'
+    #
+    # Cache directory
+    # cache_dir: '/cache'
+    #
     # Extra registration option
     # extra_registration_option: '--maximum-timeout=3600'
     #
     # Extra configuration options to change in the config.toml file
-    # This parameter is a dictionnary where the first level keys are TOML section names
+    # This parameter is a dictionary where the first level keys are TOML section names
     # Full list of configuration are available on Gitlab Runner documentation:
     # See https://docs.gitlab.com/runner/configuration/advanced-configuration.html
     #

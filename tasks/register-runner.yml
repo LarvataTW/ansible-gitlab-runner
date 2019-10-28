@@ -12,6 +12,7 @@
     {% endif %}
     --executor '{{ gitlab_runner.executor|default("shell") }}'
     --limit '{{ gitlab_runner.concurrent_specific|default(0) }}'
+    --output-limit '{{ gitlab_runner.output_limit|default(4096) }}'
     --locked='{{ gitlab_runner.locked|default(false) }}'
     {% for env_var in gitlab_runner.env_vars|default([]) %}
     --env '{{ env_var }}'
@@ -48,6 +49,12 @@
     {% if gitlab_runner.cache_s3_bucket_location is defined %}
     --cache-s3-bucket-location '{{ gitlab_runner.cache_s3_bucket_location }}'
     {% endif %}
+    {% if gitlab_runner.builds_dir|default(false) %}
+    --builds-dir '{{ gitlab_runner.builds_dir }}'
+    {% endif %}
+    {% if gitlab_runner.cache_dir|default(false) %}
+    --cache-dir '{{ gitlab_runner.cache_dir }}'
+    {% endif %}
     {% if gitlab_runner.cache_s3_insecure|default(false) %}
     --cache-s3-insecure
     {% endif %}
@@ -58,3 +65,4 @@
     - configured_runners.stderr.find('\n' + gitlab_runner.name|default(ansible_hostname+'-'+gitlab_runner_index|string)) == -1
     - gitlab_runner.state|default('present') == 'present'
   no_log: true
+  become: true
